@@ -1,0 +1,23 @@
+-- Resta de naturales
+def sub = \n m. m pred n
+
+-- x <= y
+def le = \x y. is0 (sub x y)
+
+-- Potencia de dos
+def pow2 = \x. mult x x
+
+-- Busca el minimo n tal que x < (n+1)^2
+def sqrti = Y (\f x n. (le (pow2 (suc n)) x) (f x (suc n)) (n))
+
+-- Raiz entera
+def sqrt = \x. sqrti x zero
+
+-- Resto
+def mod = Y (\f x y. (is0 (sub y x)) (f (sub x y) y) (x))
+
+-- Busca m que divida n. Itera hasta t
+def divisores' = Y (\f n m t. (le m t) ((is0 (mod n m)) (cons m (f n (suc m) t)) (f n (suc m) t)) nil)
+
+-- Determina si n tiene algun divisor entre 1 y raiz entera de n
+def divisores = \n. divisores' n 1 (sqrt n)
